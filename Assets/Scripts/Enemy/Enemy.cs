@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Enemy : MonoBehaviour, IMovable
+public class Enemy : MonoBehaviour
 {
     [SerializeField] private Transform _target;
     [SerializeField] private float _speed;
@@ -9,12 +9,6 @@ public class Enemy : MonoBehaviour, IMovable
 
     private Rigidbody _rigidbody;
     private Transform _transform;
-
-    public void Move()
-    {
-        Vector3 direction = _target.position - _transform.position;
-        _rigidbody.MovePosition(_transform.position + direction * _speed * Time.fixedDeltaTime);
-    }
 
     private void Awake()
     {
@@ -28,5 +22,10 @@ public class Enemy : MonoBehaviour, IMovable
 
         if (direction.sqrMagnitude > _distanceFromPlayer * _distanceFromPlayer)
             Move(direction.normalized);
+    }
+
+    public void Move(Vector3 direction)
+    {
+        _rigidbody.MovePosition(_transform.position + direction * _speed * Time.fixedDeltaTime);
     }
 }
